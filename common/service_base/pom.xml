@@ -11,5 +11,14 @@
 
     <artifactId>service_base</artifactId>
 
+    <!--导入common-utils,统一返回结果-->
+    <dependencies>
+        <dependency>
+            <groupId>com.tx</groupId>
+            <artifactId>common_utils</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+
 
 </project>
