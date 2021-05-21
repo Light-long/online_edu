@@ -30,6 +30,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/edu/teacher")
 @Api(description = "讲师管理")
+@CrossOrigin
 public class TeacherController {
 
     // 注入TeacherService,这个类被Mybatis-Plus封装过，底层调用了Mapper层
