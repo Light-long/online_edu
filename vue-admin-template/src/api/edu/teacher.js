@@ -16,7 +16,33 @@ export default {
     deleteTeacher(id) {
       return request({
         url: `/edu/teacher/${id}`,
-        method: 'delete',
+        method: 'delete'
       })
     },
+
+    // 添加讲师
+    addTeacher(teacher) {
+      return request({
+        url: `/edu/teacher/addTeacher`,
+        method: 'post',
+        data: teacher
+      })
+    },
+
+    // 根据id查询讲师
+    getTeacherById(id) {
+      return request({
+        url: `/edu/teacher/${id}`,
+        method: 'get'
+      })
+    },
+
+    // 更新讲师
+    updateTeacher(id,teacher) {
+      return request({
+        url: `/edu/teacher/${id}`,
+        method: 'put',
+        data: teacher
+      })
+    }
 }

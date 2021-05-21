@@ -127,6 +127,8 @@ public class TeacherController {
             wrapper.le("gmt_create",end);
         }
 
+        // 按照更新顺序降序排列
+        wrapper.orderByDesc("gmt_modified");
         // 条件分页查询
         teacherService.page(page,wrapper);
         // 所有数据都封装在了page对象中
