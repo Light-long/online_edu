@@ -69,7 +69,7 @@
             </router-link>
             <!--scope代表表格-->
             <el-button type="danger" size="mini" icon="el-icon-delete"
-                       @click="removeTeacherById(scope.row.id)">删除</el-button>
+                       @click="deleteTeacherById(scope.row.id)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -132,8 +132,43 @@
           this.teacherQuery = {}
           // 查询所有
           this.getTeacherList()
+        },
+        // 根据id删除讲师
+        deleteTeacherById(id) {
+          this.$confirm('此操作将永久删除该记录, 是否继续?', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          // 点击确定
+          }).then(() => {
+            // 执行删除
+            // 必须加return不然删除后没法刷新页面
+            return teacher.deleteTeacher(id)
+            // 删除成功
+            }).then(() => {
+              // 弹出成功提示信息
+              this.$message({
+                type: 'success',
+                message: '删除成功!'
+              })
+              // 更新列表
+              this.getTeacherList()
+            // 删除失败
+            }).catch((response) => { // 失败
+              if (response === 'cancel') {
+                this.$message({
+                  type: 'info',
+                  message: '已取消删除'
+                })
+              } else {
+                this.$message({
+                  type: 'error',
+                  message: '删除失败'
+                })
+              }
+            })
+          }
         }
-      }
     }
 </script>
 

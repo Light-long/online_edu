@@ -1,6 +1,7 @@
 import request from '@/utils/request'
 
 export default {
+    // 查询+分页+组合条件
     getTeacherListPageByCondition(current,size,teacherQuery) {
       return request({
         url: `/edu/teacher/pageTeacherCondition/${current}/${size}`,
@@ -9,5 +10,13 @@ export default {
         // data表示把对象转换为json传递到接口
         data: teacherQuery
       })
-    }
+    },
+
+    // 逻辑删除
+    deleteTeacher(id) {
+      return request({
+        url: `/edu/teacher/${id}`,
+        method: 'delete',
+      })
+    },
 }

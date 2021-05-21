@@ -3,7 +3,6 @@ package com.tx.edu.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.tx.base.exception.MyException;
 import com.tx.edu.entity.Teacher;
 import com.tx.edu.entity.vo.TeacherQuery;
 import com.tx.edu.service.TeacherService;
