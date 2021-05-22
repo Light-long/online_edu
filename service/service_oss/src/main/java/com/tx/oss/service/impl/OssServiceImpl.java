@@ -26,7 +26,6 @@ public class OssServiceImpl implements OssService {
 
         OSS ossClient = null;
         InputStream fileInputStream = null;
-        String url = null;
         try {
             // 创建一个Oss实例
             ossClient = new OSSClientBuilder().build(endPoint,accessKeyId,accessKeySecret);
@@ -48,23 +47,12 @@ public class OssServiceImpl implements OssService {
             // 调用Oss方法实现上传
             // 三个参数，bucketName，文件路径+文件名称（可以拼接文件路径），文件输入流
             ossClient.putObject(bucketName,fileName,fileInputStream);
+            ossClient.shutdown();
             // 获取上传之后的路径，返回，存数据库
-            url = "https://"+bucketName+"."+endPoint+"/"+fileName;
+            return "https://"+bucketName+"."+endPoint+"/"+fileName;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
-        } finally {
-            if (fileInputStream != null) {
-                try {
-                    fileInputStream.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (ossClient != null) {
-                ossClient.shutdown();
-            }
         }
-        return url;
     }
 }

@@ -24,7 +24,30 @@
         <el-form-item label="讲师简介">
           <el-input v-model="teacher.intro" :rows="10" type="textarea"/>
         </el-form-item>
-        <!-- 讲师头像：TODO -->
+        <!-- 讲师头像-->
+        <el-form-item label="讲师头像">
+          <!-- 头衔缩略图 -->
+          <pan-thumb :image="teacher.avatar"/>
+          <!-- 文件上传按钮 -->
+          <el-button type="primary" icon="el-icon-upload" @click="imageCropperShow=true">更换头像
+          </el-button>
+          <!--
+            v-show：是否显示上传组件
+            :key：类似于id，如果一个页面多个图片上传控件，可以做区分
+            :url：后台上传的url地址
+            @close：关闭上传组件
+            @crop-upload-success：上传成功后的回调 -->
+          <image-cropper
+            v-show="imageCropperShow"
+            :width="300"
+            :height="300"
+            :key="imageCropperKey"
+            :url="BASE_API+'/oss/file/upLoadAvatar'"
+            field="file"
+            @close="close"
+            @crop-upload-success="cropSuccess"/>
+          <!--上面的方法封装过了，调用时不能加()******-->
+        </el-form-item>
 
         <!--提交按钮-->
         <el-form-item>
@@ -38,11 +61,23 @@
 
 <script>
   import teacher from "@/api/edu/teacher";
+  // 引入组件模块
+  import ImageCropper from '@/components/ImageCropper'
+  import PanThumb from '@/components/PanThumb'
     export default {
+        // 声明组件
+        components: { ImageCropper, PanThumb },
         data() {
           return {
             teacher: {},
-            saveBtnDisabled: false
+            // 避免重复提交
+            saveBtnDisabled: false,
+            // 上传组件是否显示
+            imageCropperShow: false,
+            // 上传组件key值
+            imageCropperKey: 0,
+            // 请求IP+Port
+            BASE_API: process.env.BASE_API
           }
         },
         created() {
@@ -55,6 +90,21 @@
           }
         },
         methods: {
+          // 关闭上传组件
+          close() {
+            this.imageCropperShow = false
+            // 上传组件初始化
+            this.imageCropperKey = this.imageCropperKey + 1
+          },
+          // 上传成功
+          cropSuccess(data) {
+            // 关闭上传组件
+            this.imageCropperShow = false
+            // 返回图片地址(用于显示)
+            this.teacher.avatar = data.url
+            // 上传组件初始化
+            this.imageCropperKey = this.imageCropperKey + 1
+          },
           init() {
             // 判断路由中是否有id，如果有就是更新，需要数据回显
             if (this.$route.params && this.$route.params.id) {
@@ -63,6 +113,8 @@
             } else {
               // 清空表单
               this.teacher = {}
+              // 默认头像
+              this.teacher.avatar = 'https://online-edu-glxy.oss-cn-shanghai.aliyuncs.com/2021/05/22/default.jpg'
             }
           },
           saveOrUpdateTeacher() {
