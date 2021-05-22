@@ -46,13 +46,25 @@
           }
         },
         created() {
-          // 判断路由中是否有id，如果有就是更新，需要数据回显
-          if (this.$route.params && this.$route.params.id) {
-            const id = this.$route.params.id
-            this.getTeacher(id)
+          this.init()
+        },
+        // 路由监听,路由变化就会执行
+        watch: {
+          $route(to,from) {
+            this.init()
           }
         },
         methods: {
+          init() {
+            // 判断路由中是否有id，如果有就是更新，需要数据回显
+            if (this.$route.params && this.$route.params.id) {
+              const id = this.$route.params.id
+              this.getTeacher(id)
+            } else {
+              // 清空表单
+              this.teacher = {}
+            }
+          },
           saveOrUpdateTeacher() {
             // 判断teacher.id是否有值，如果id有值为更新，没有值为添加
             if (!this.teacher.id) {
