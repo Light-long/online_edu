@@ -1,0 +1,24 @@
+# 端口
+server:
+  port: 8002
+
+spring:
+  # 服务名
+  application:
+    name: service-oss
+  # 环境
+  profiles:
+    active: dev
+  # 上传文件最大size
+  servlet:
+    multipart:
+      max-file-size: 10MB
+
+# 阿里云OSS
+aliyun:
+  oss:
+    file:
+      endpoint: oss-cn-shanghai.aliyuncs.com
+      keyid: LTAI4G1NihxWm955JPK481rH
+      keysecret: 7gw7Nq3g69hXFkv91LObsbFow6uzae
+      bucketname: online-edu-glxy
