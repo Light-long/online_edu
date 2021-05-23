@@ -82,7 +82,7 @@ export const constantRouterMap = [
       },
       {
         path: 'save',
-        name: '添加讲师',
+        name: '添加课程分类',
         component: () => import('@/views/edu/subject/save'),
         meta: { title: '添加课程分类', icon: 'upload' }
       }
